@@ -16,8 +16,8 @@ export class ApiClient{
    * Выполняет GET-запрос к эндпоинту товаров и возвращает массив товаров.
    * @returns - Промис с массивом товаров, доступных для покупки
    */
-  getProducts(): Promise<IProduct[]> {
-    return this.api.get<{total: number, items: IProduct[]}>('/api/weblarek/product/')
+  async getProducts(): Promise<IProduct[]> {
+    return this.api.get<{total: number, items: IProduct[]}>('/product/')
     .then(response => response.items);
   }
 
@@ -27,7 +27,7 @@ export class ApiClient{
    * @param orderData - данные заказа, включая информацию о покупателе и список товаров.
    * @returns - Промис с ответом сервера, содержащим идентификатор созданного заказа и итоговую сумму.
    */
-  confirmOrder(orderData: IOrderRequest) : Promise<IOrderResponse> {
-    return this.api.post<IOrderResponse>('/api/weblarek/order', orderData);
+  async confirmOrder(orderData: IOrderRequest) : Promise<IOrderResponse> {
+    return this.api.post<IOrderResponse>('/order', orderData);
   }
 }

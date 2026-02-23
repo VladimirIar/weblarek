@@ -1,9 +1,14 @@
 import { IBuyer } from "../../../types/IBuyer";
 import { TPayment } from "../../../types/IBuyer";
+import { EventEmitter } from "../Events";
 
 export class Customer {
-  private customerData: IBuyer;
-
+  private customerData: IBuyer = {
+    payment: '',
+    email: "",
+    phone: "",
+    address: ""
+  };
   /**
    * Поля конструктора опциональны
    * @param payment - способ оплаты, только 'card', 'cash' или ''
@@ -11,19 +16,7 @@ export class Customer {
    * @param phone
    * @param address
    */
-  constructor(
-    payment: TPayment = "",
-    email: string = "",
-    phone: string = "",
-    address: string = ""
-  ) {
-    this.customerData = {
-      payment,
-      email,
-      phone,
-      address,
-    };
-  }
+  constructor(private events: EventEmitter) {}
 
   /**
    * сохранение данных в модели.
@@ -35,19 +28,27 @@ export class Customer {
     switch (field) {
       case "payment":
         if (value === "card" || value === "cash" || value === "")
+        {
           this.customerData.payment = value;
+          this.events.emit('customer:change');
+        }
         else {
           throw new Error(`Недопустимое значение payment: ${value}`);
         }
         break;
       case "email":
         this.customerData.email = value;
+        this.events.emit('customer:change');
+
         break;
       case "phone":
         this.customerData.phone = value;
+        this.events.emit('customer:change');
+
         break;
       case "address":
         this.customerData.address = value;
+        this.events.emit('customer:change');
         break;
       default:
         throw new Error(`Значение ${field} не найдено`);
@@ -66,6 +67,8 @@ export class Customer {
    */
   clearCustomerData(): void {
     this.customerData = { payment: "", email: "", phone: "", address: "" };
+    this.events.emit('customer:change');
+
   }
 
   /**
@@ -91,7 +94,7 @@ export class Customer {
       errors.phone = "Введите номер телефона";
     }
     if (this.customerData.address == "") {
-      errors.address = "Укажите адрес";
+      errors.address = "Необходиме указать адрес";
     }
     return errors;
   }

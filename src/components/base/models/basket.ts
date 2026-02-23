@@ -1,13 +1,17 @@
 import { IProduct } from "../../../types/IProduct";
+import { EventEmitter } from "../Events";
 
 export class Basket {
+  private events: EventEmitter
   /**
-   * в конструктор опционально можно передат товары или создать пустой экземпляр
+   * в конструктор необходимо передать события
+   * так же в конструктор опционально можно передат товары или создать пустой экземпляр 
    */
-  constructor(private items: IProduct[] = []) {}
+  constructor(events: EventEmitter, private items: IProduct[] = []) {
+    this.events = events
+  }
 
   /**
-   *
    * @returns получение массива товаров, которые находятся в корзине
    */
   getItems(): IProduct[] {
@@ -23,6 +27,7 @@ export class Basket {
       throw new Error (`товар "${item.title}" уже есть в корзине`)
     }
     this.items.push(item);
+    this.events.emit('basket:change');
   }
 
   /**
@@ -32,6 +37,7 @@ export class Basket {
   deleteItem(item: IProduct): void {
     const id: string = item.id;
     this.items = this.items.filter((product) => product.id !== id);
+    this.events.emit('basket:change');
   }
 
   /**
@@ -39,6 +45,7 @@ export class Basket {
    */
   clearCart(): void {
     this.items = [];
+    this.events.emit('basket:change');
   }
 
   /**

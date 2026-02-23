@@ -1,20 +1,25 @@
 import './scss/styles.scss';
-import { Basket } from './components/base/models/Basket';
+import { Basket } from './components/base/models/basket';
 import { Products } from './components/base/models/products';
-import { Customer } from './components/base/models/Customer';
-import { apiProducts } from './utils/data';
+import { Customer } from './components/base/models/customer';
+import { API_URL } from './utils/constants';
 import { Api } from './components/base/Api';
 import { ApiClient } from './components/base/ApiClient';
+import { Gallery } from './components/base/view/Gallery';
+import { cloneTemplate, ensureElement } from './utils/utils';
+import { EventEmitter } from './components/base/Events';
 
+import { CardCatalog } from './components/base/view/card/CardCatalog';
 
-const basketModel = new Basket();
-const productsModel = new Products();
-const customerModel = new Customer(); 
+const events = new EventEmitter()
+// const basketModel = new Basket();
+const productsModel = new Products(events);
+// const customerModel = new Customer(); 
 
 
 //Тест функциональности
-// productsModel.setItems(apiProducts.items);
-// console.log(`Массив товаров из каталога: ${JSON.stringify(productsModel.getItems(), null, 2)}`)
+//productsModel.setItems(apiProducts.items);
+//console.log(`Массив товаров из каталога: ${JSON.stringify(productsModel.getItems(), null, 2)}`)
 // console.log(`Товар по ID: ${JSON.stringify(productsModel.getItemById(apiProducts.items[1].id), null, 2)}`)
 // productsModel.saveCard(productsModel.getItems()[2])
 // console.log(`сохраненный для подробного отображения товар: ${JSON.stringify(productsModel.getCard(), null, 2)}`)
@@ -39,10 +44,4 @@ const customerModel = new Customer();
 // console.log(customerModel.getCustomerData());
 // console.log(customerModel.validate())
 
-const API_INSTANCE = new Api(import.meta.env.VITE_API_ORIGIN);
-const apiClient = new ApiClient(API_INSTANCE);
-
-apiClient.getProducts().then(productsFromServer => {
-  productsModel.setItems([...productsFromServer]);
-  console.log(`Массив товаров из каталога: ${JSON.stringify(productsModel.getItems(), null, 2)}`)
-})
+//  const API_INSTANCE = new Api(import.meta.env.VITE_API_ORIGIN);

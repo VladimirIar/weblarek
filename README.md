@@ -139,7 +139,7 @@ interface IBuyer {
 `phone` - номерр телефона покуателя
 `address` - адрес доставки
 
-## Модели данных
+## Model (Модели данных)
 Классы и их методы используемые в приложении для реализации работы с данными.
 
 ### Класс Каталог товаров
@@ -222,9 +222,9 @@ constructor(
 значениями у которых будет текст ошибки в случае если поле пустое. 
 Если же поле не содержит ошибок, то такое свойство в объекте может отсутствовать.
 
-# Слой коммуникации
+## Слой коммуникации
 
-## Класс ApiClient
+### Класс ApiClient
 Класс использует композицию, чтобы выполнить запрос на сервер
 
 Конструктор:
@@ -237,3 +237,215 @@ constructor(
 `getProducts() : Promice<IProduct[]>` - Получает каталог товаров с сервера. Выполняет GET-запрос к эндпоинту товаров и возвращает массив товаров.
 
 `confirmOrder(orderData: IOrderRequest) : Promise<IOrderResponse>` - Отправляет заказ на сервер для оформления. Выполняет POST-запрос к эндпоинту заказов с данными покупателя и выбранными товарами.
+
+## View (Представление)
+
+### Заголовок (Header)
+Класс реализует отображение значка корзины и изменение счётчика товаров в ней
+
+Конструктор:
+`constructor(events: IEvents, container: HtmlElement)` 
+
+Поля класса:
+`protected basketButton: HtmlButtonElement` - хранит кнопку корзины
+`protectedcounterElement: HtmlElement` - хранит счётчик товаров в корзине
+
+Методы:
+`set counter(value: number)` - устанавливает значение счётчика товаров
+
+### Card (Карточка)
+Класс реализует отображение карточек товаров 
+
+Конструктор:
+`constructor(container: HtmlElement)`
+
+Поля класса: 
+`protected titleElement: HtmlElement` - поле хранящее название товара
+`protected priceElement: HtmlElement` - поле хранящее цену товара
+
+Методы:
+`set title(textTitle: string)` - устанавливает название товара
+`set price(textPrice: number)` - устанавливает цену товара
+
+### CardCatalog (Галлерея товаров)
+Класс наследует Card и отображает списов товаров на основной странице
+
+Конструктор:
+`constructor(container: HtmlElement, actions?: ICardAction)`
+
+Поля класса:
+`protected categoryElement: HtmlElement` - поле хранящее название товара
+`protected imageElement: HtmlImageElement` - поле хранящее цену товара
+
+Методы:
+`set category(textCategory: string)` - устанавливает категорию
+`set image(textImage: string)` устанавливает изображение
+
+### СardPreview (Подробное отображение товара)
+Класс наследует CardCatalog и подробно отображает карточку товара в модальном окне
+
+Конструктор: 
+`constuctor(container: HtmlElement, actions?: ICardAction)`
+
+Поля класса: 
+`protected subtitleElement: HtmlElement` - поле хранящее описание товара
+`protected basketButton: HtmlButtonElement` - поле хранящее кнопку для взаимодействия с карзиной(добавить/удалить)
+
+Методы:
+`set subtitle(textSubtitle: string)` - установить описание
+`set buttonText(textOnButton: string)` - установить текст на кнопке
+`set disabled(isDisable: bool)` - установить активность кнопки
+
+### CardBasket (карточка в коризне)
+Класс наследует Card и отображает список товаров в корзине 
+
+Конструктор: 
+`constructor(container: HtmlElement, actions?: ICardAction)`
+
+Поля класса:
+`protected deleteButton: HtmlButtonElement` - кнопка удаления товара из корзины 
+`protected indexElement: HtmlElement` - индекс элемента в корзине по счёту добавления
+
+Методы:
+`set index(indexNumber: numder)` - метод для передаци порядкового индекса товара
+
+### Form (Форма) 
+класс для отображения форм
+
+Конструктор:
+`constructor(container: HtmlElement)`
+
+Поля класса: 
+`protected submitButton: HtmlButtonElement` - кнопка отправки формы
+`protected errorsElement: HtmlElement` - элемент для отображения ошибок валидации формы
+
+Методы: 
+`set error(errorText: string)` - установить текст ошибки
+`set disable(isDisable: boolean)` - установить активность кнопки 
+
+### Order 
+Класс наследует Form и отобажает окно оформления заказа
+
+Конструктор:
+`constructor(container: HtmlElement)`
+
+Поля класса:
+`protected paymentButtons: HtmlButtonElement` - кнопки для выбора типа оплаты
+`protected addressInput: HtmlInputElement` - Поле ввода адреса доставки
+
+Методы:
+`set payment(type: 'cash' | 'card)` - установить тип оплаты
+`set address(addressText: string)` - установить адрес
+
+### Contacts 
+Класс наследует Form и отображает окно в котором необходимо оставить контакты
+
+Конструктор:
+`constructor(container: HtmlElement)`
+
+Поля класса: 
+`protected emailInput: HtmlInputElement` - поле для ввода email
+`protected phoneInput: HtmlInputElement` - поле для ввода номера телефона 
+
+Методы: 
+`set email(emaliText: string)` - установить email
+`set phone(phoneNumber: string)` - установить номер телефона
+
+
+### Modal (модальное окно)
+Конструктор:
+`constructor(events: IEvents, container: HtmlElement)`
+
+Поля класса:
+`protected closeButton: HtmlButtonElement` - кнопка закрытия модального окна
+`protected modalContent: HtmlElement` - контент в модальном окне
+
+Методы: 
+`set content(elements: HtmlElement): void` - поместить контент в модальное окно
+`open(): void` - открыть модальное окно
+`close(): void` - закрыть модальное окно 
+
+### BasketList (корзина) 
+
+Конструктор:
+`constructor(events: EventEmitter ,container: HtmlElement)` 
+
+Поля класса:
+`protected basketList: HtmlElement` - Элемент хранящий список товаров добавленных в корзину
+`protected basketButton: HtmlButtonElement` - кнопка для подтверждения покупки 
+`protected totalPrice: HtmlElement` - общая цена товаров добавленных в корзину
+
+Методы:
+`set price(num: number) : void` - установить сумму товаров в корзине
+`set list(products: HtmlElement[]): void` - устанавливает списов товаров добавленных в корзину
+`set buttonDisabled (isDisable: bool): void` - устанавливает активность кнопки покупки 
+
+### Sucsess (окно успешного оформления)
+
+Конструктор:
+`constructior(events: IEvents, container: HtmlElement)`
+
+Поля класса: 
+`protected closeButton: HtmlButtonElement` - конпка закрывающая окно
+`protected totalPrice: HtmlElement` - общая сумма приобретенных товаров
+
+Методы:
+`set description(num: number)` - устанавливает описание хранящую общую сумму товаров
+
+### Gallery
+
+Конструктор: 
+`constructor(container: HtmlElement)` 
+
+Методы:
+`set catalog(cards: HtmlElement[]): void` - устанавливает католог карточек на главной странице
+
+## Events (События)
+
+### Contacts
+
+`contacts:submit` - событие подтверждает отправку формы c контактами при нажатии кнопки подтверждения 
+`contacts:email` - событие передаёт email когда пользователь вводти его в форму
+`contacts:phone` - событие передаёт номер телефона когда пользователь вводти его в форму
+
+### Order
+
+`order:submit` - событие подтверждает отправку формы с данными для покупки при нажатии кнопки подтверждения 
+`order:address` - событие передаёт адрес когда пользователь вводти его в форму
+`order:payment` - событие передаёт тип оплаты когда пользователь выбирает необходимый тип оплаты
+
+### BasketList
+
+`basket:order` - событие передаёт список выбранных пользователем товаров при нажатии кнопки подтверждения
+
+### Header 
+
+`basket:render` - событие отображает коризну с выбранными товарами при нажатии на значок корзины
+
+### Modal 
+
+`modal:close` - событие закрывает модальное окно при нажатии на кнопку закрытия окна (крестик)
+
+### Success 
+
+`success:close` - событие закрывает окно с подтвеждением покупки при нажатии на кнопку "за новыми покупками"
+
+--- 
+события в моделях
+--- 
+
+### Basket 
+
+`basket:change` - реагирует на каждое изменение в модели корзины (Добавление товара/удалиене товара/очищение корзины)
+
+### Customer
+
+`customer:change` - рерагирует на любое изменение в модели покупателя (Изменение данных/ очищение данных) 
+
+### Product 
+
+`products:change` - реагирует на добавление списка продуктов 
+`product:select` - peaгирует на выбор карточки товара для подробного отображения
+
+## Presenter  (Презентер)
+
