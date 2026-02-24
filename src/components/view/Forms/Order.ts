@@ -1,6 +1,7 @@
-import { ensureElement, ensureAllElements } from "../../../../utils/utils";
+import { ensureElement, ensureAllElements } from "../../../utils/utils";
 import { Form } from "./Form";
-import { EventEmitter } from "../../Events";
+import { EventEmitter } from "../../base/Events";
+import { TPayment } from "../../../types/IBuyer";
 
 export class Order extends Form {
   protected paymentButtons: HTMLButtonElement[];
@@ -31,7 +32,7 @@ export class Order extends Form {
       });
     });
   }
-  set payment(type: "cash" | "card" | "") {
+  set payment(type: TPayment) {
     this.paymentButtons.forEach((button) => {
       const isActive = button.name === type;
       button.classList.toggle("button_alt-active", isActive);

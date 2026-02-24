@@ -1,13 +1,13 @@
-import { ensureElement } from "../../../../utils/utils";
+import { ensureElement } from "../../../utils/utils";
 import { Card } from "./Card";
-import { categoryMap, CDN_URL } from "../../../../utils/constants";
-import { IProduct } from "../../../../types/IProduct";
-import { ICardAction } from "../../../../types/ICardAction";
+import { categoryMap, CDN_URL } from "../../../utils/constants";
+import { IProduct } from "../../../types/IProduct";
+import { ICardAction } from "../../../types/ICardAction";
 
 type CategoryKey = keyof typeof categoryMap;
 export type TCardCatalog = Pick<IProduct, "image" | "category">;
 
-export class CardCatalog extends Card<TCardCatalog> {
+export class CardCatalog<T extends TCardCatalog> extends Card<T> {
   protected categoryElement: HTMLElement;
   protected imageElement: HTMLImageElement;
 
@@ -40,15 +40,5 @@ export class CardCatalog extends Card<TCardCatalog> {
       `${CDN_URL}${value.replace("svg", "png")}`,
       this.title
     );
-  }
-
-  render(data?: Partial<TCardCatalog> | undefined): HTMLElement {
-    if (data?.image !== undefined) {
-      this.image = data.image;
-    }
-    if (data?.category !== undefined) {
-      this.category = data.category;
-    }
-    return super.render(data);
   }
 }

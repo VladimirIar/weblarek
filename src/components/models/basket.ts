@@ -1,5 +1,5 @@
-import { IProduct } from "../../../types/IProduct";
-import { EventEmitter } from "../Events";
+import { IProduct } from "../../types/IProduct";
+import { EventEmitter } from "../base/Events";
 
 export class Basket {
   private events: EventEmitter;

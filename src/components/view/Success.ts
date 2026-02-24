@@ -1,6 +1,6 @@
-import { ensureElement } from "../../../utils/utils";
-import { IEvents } from "../Events";
-import { Component } from "../Component";
+import { ensureElement } from "../../utils/utils";
+import { IEvents } from "../base/Events";
+import { Component } from "../base/Component";
 
 type TSuccess = { description: number };
 

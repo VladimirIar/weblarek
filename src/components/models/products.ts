@@ -1,5 +1,5 @@
-import { IProduct } from "../../../types/IProduct";
-import { EventEmitter } from "../Events";
+import { IProduct } from "../../types/IProduct";
+import { EventEmitter } from "../base/Events";
 
 export class Products {
   private chosenCard?: IProduct;
@@ -47,9 +47,9 @@ export class Products {
    *
    * @returns Возвращает товар для отображения
    */
-  getCard(): IProduct {
+  getCard(): IProduct | undefined {
     if (!this.chosenCard) {
-      throw new Error("Карточка товара не определена");
+      return undefined
     } else return this.chosenCard;
   }
 }

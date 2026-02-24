@@ -1,6 +1,6 @@
-import { ensureElement } from "../../../../utils/utils";
+import { ensureElement } from "../../../utils/utils";
 import { Form } from "./Form";
-import { EventEmitter } from "../../Events";
+import { EventEmitter } from "../../base/Events";
 
 export class Contacts extends Form {
   protected emailInput: HTMLInputElement;

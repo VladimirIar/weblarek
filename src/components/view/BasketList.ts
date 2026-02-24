@@ -1,6 +1,6 @@
-import { Component } from "../Component";
-import { ensureElement } from "../../../utils/utils";
-import { IEvents } from "../Events";
+import { Component } from "../base/Component";
+import { ensureElement } from "../../utils/utils";
+import { IEvents } from "../base/Events";
 
 type TBasket = {
   price: number;
@@ -27,6 +27,7 @@ export class basketList extends Component<TBasket> {
       ".basket__price",
       this.container
     );
+    this.basketButton.disabled = true;
     this.basketButton.addEventListener("click", () => {
       events.emit("basket:order");
     });
@@ -41,20 +42,6 @@ export class basketList extends Component<TBasket> {
   }
 
   set buttonDisabled(isDisable: boolean) {
-    this.basketButton.disabled = isDisable;
-  }
-  render(data?: Partial<TBasket> | undefined): HTMLElement {
-    if (data !== undefined) {
-      if (data.price !== undefined) {
-        this.price = data.price;
-      }
-      if (data.list !== undefined) {
-        this.list = data.list;
-      }
-      if (data.buttonDisabled !== undefined) {
-        this.buttonDisabled = data.buttonDisabled;
-      }
-    }
-    return super.render(data);
+      this.basketButton.disabled = isDisable;
   }
 }

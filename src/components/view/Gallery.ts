@@ -1,4 +1,4 @@
-import { Component } from "../Component";
+import { Component } from "../base/Component";
 
 type TGallery = {
   catalog: HTMLElement[];
@@ -10,8 +10,6 @@ export class Gallery extends Component<TGallery> {
   }
 
   set catalog(cards: HTMLElement[]) {
-    cards.forEach((card) => {
-      this.container.append(card);
-    });
+      this.container.replaceChildren(...cards);
   }
-}
+} 

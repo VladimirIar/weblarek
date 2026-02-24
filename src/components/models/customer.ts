@@ -1,6 +1,6 @@
-import { IBuyer } from "../../../types/IBuyer";
-import { TPayment } from "../../../types/IBuyer";
-import { EventEmitter } from "../Events";
+import { IBuyer } from "../../types/IBuyer";
+import { TPayment } from "../../types/IBuyer";
+import { EventEmitter } from "../base/Events";
 
 export class Customer {
   private customerData: IBuyer = {
@@ -30,8 +30,6 @@ export class Customer {
         if (value === "card" || value === "cash" || value === "") {
           this.customerData.payment = value;
           this.events.emit("customer:change");
-        } else {
-          throw new Error(`Недопустимое значение payment: ${value}`);
         }
         break;
       case "email":
@@ -48,8 +46,6 @@ export class Customer {
         this.customerData.address = value;
         this.events.emit("customer:change");
         break;
-      default:
-        throw new Error(`Значение ${field} не найдено`);
     }
   }
   /**
@@ -74,12 +70,7 @@ export class Customer {
    * соответствующие полям объекта customerData, значениями у которых будет текст
    * ошибки в случае если поле пустое.
    */
-  validate(): {
-    payment?: string;
-    email?: string;
-    phone?: string;
-    address?: string;
-  } {
+  validate(): Partial<IBuyer> {
     const errors: any = {};
     if (this.customerData.payment === "") {
       errors.payment = "Не выбран вид оплаты";

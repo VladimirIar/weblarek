@@ -1,6 +1,6 @@
-import { Component } from "../Component";
-import { EventEmitter } from "../Events";
-import { ensureElement } from "../../../utils/utils";
+import { Component } from "../base/Component";
+import { EventEmitter } from "../base/Events";
+import { ensureElement } from "../../utils/utils";
 
 type TModal = { content: HTMLElement };
 
@@ -20,13 +20,12 @@ export class Modal extends Component<TModal> {
     );
 
     this.closeButton.addEventListener("click", () => {
-      this.events.emit("modal:close");
+      this.close();
     });
 
     this.container.addEventListener("click", (ev) => {
       if (ev.target === this.container) {
         this.close();
-        events.emit("modal:close");
       }
     });
   }
@@ -40,4 +39,5 @@ export class Modal extends Component<TModal> {
   set content(elements: HTMLElement) {
     this.modalContent.append(elements);
   }
+
 }
