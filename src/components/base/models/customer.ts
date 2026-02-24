@@ -4,10 +4,10 @@ import { EventEmitter } from "../Events";
 
 export class Customer {
   private customerData: IBuyer = {
-    payment: '',
+    payment: "",
     email: "",
     phone: "",
-    address: ""
+    address: "",
   };
   /**
    * Поля конструктора опциональны
@@ -27,28 +27,26 @@ export class Customer {
   setField(field: keyof IBuyer, value: string | TPayment): void {
     switch (field) {
       case "payment":
-        if (value === "card" || value === "cash" || value === "")
-        {
+        if (value === "card" || value === "cash" || value === "") {
           this.customerData.payment = value;
-          this.events.emit('customer:change');
-        }
-        else {
+          this.events.emit("customer:change");
+        } else {
           throw new Error(`Недопустимое значение payment: ${value}`);
         }
         break;
       case "email":
         this.customerData.email = value;
-        this.events.emit('customer:change');
+        this.events.emit("customer:change");
 
         break;
       case "phone":
         this.customerData.phone = value;
-        this.events.emit('customer:change');
+        this.events.emit("customer:change");
 
         break;
       case "address":
         this.customerData.address = value;
-        this.events.emit('customer:change');
+        this.events.emit("customer:change");
         break;
       default:
         throw new Error(`Значение ${field} не найдено`);
@@ -67,8 +65,7 @@ export class Customer {
    */
   clearCustomerData(): void {
     this.customerData = { payment: "", email: "", phone: "", address: "" };
-    this.events.emit('customer:change');
-
+    this.events.emit("customer:change");
   }
 
   /**

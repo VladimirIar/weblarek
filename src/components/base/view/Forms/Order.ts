@@ -6,32 +6,38 @@ export class Order extends Form {
   protected paymentButtons: HTMLButtonElement[];
   protected addressInput: HTMLInputElement;
 
-  constructor(container: HTMLElement, protected events: EventEmitter) {
+  constructor(protected events: EventEmitter, container: HTMLElement) {
     super(container);
-    this.paymentButtons = ensureAllElements<HTMLButtonElement>('.button_alt', this.container);
-    this.addressInput = ensureElement<HTMLInputElement>('.form__input', this.container);
-    this.submitButton.addEventListener('click', (ev) => {
+    this.paymentButtons = ensureAllElements<HTMLButtonElement>(
+      ".button_alt",
+      this.container
+    );
+    this.addressInput = ensureElement<HTMLInputElement>(
+      ".form__input",
+      this.container
+    );
+    this.submitButton.addEventListener("click", (ev) => {
       ev.preventDefault();
-      events.emit('order:submit')
-    })
-    this.addressInput.addEventListener('input', (ev) => {
+      events.emit("order:submit");
+    });
+    this.addressInput.addEventListener("input", (ev) => {
       const input = ev.target as HTMLInputElement;
-      events.emit('order:address', {address: input.value})
-    })
+      events.emit("order:address", { address: input.value });
+    });
     this.paymentButtons.forEach((button) => {
-      button.addEventListener('click', (ev) => {
+      button.addEventListener("click", (ev) => {
         const target = ev.target as HTMLButtonElement;
-        events.emit('order:payment', {payment: target.name})
-      })
-    })
+        events.emit("order:payment", { payment: target.name });
+      });
+    });
   }
-  set payment(type: 'cash' | 'card'){
+  set payment(type: "cash" | "card" | "") {
     this.paymentButtons.forEach((button) => {
       const isActive = button.name === type;
-      button.classList.toggle('button_alt-active', isActive)
-    })
+      button.classList.toggle("button_alt-active", isActive);
+    });
   }
   set addres(value: string) {
-    this.addressInput.value = value
+    this.addressInput.value = value;
   }
 }

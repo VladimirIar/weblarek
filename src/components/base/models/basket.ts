@@ -2,13 +2,13 @@ import { IProduct } from "../../../types/IProduct";
 import { EventEmitter } from "../Events";
 
 export class Basket {
-  private events: EventEmitter
+  private events: EventEmitter;
   /**
    * в конструктор необходимо передать события
-   * так же в конструктор опционально можно передат товары или создать пустой экземпляр 
+   * так же в конструктор опционально можно передат товары или создать пустой экземпляр
    */
   constructor(events: EventEmitter, private items: IProduct[] = []) {
-    this.events = events
+    this.events = events;
   }
 
   /**
@@ -23,11 +23,11 @@ export class Basket {
    * @param item
    */
   addItem(item: IProduct): void {
-    if(this.items.some(product => product.id === item.id)) {
-      throw new Error (`товар "${item.title}" уже есть в корзине`)
+    if (this.items.some((product) => product.id === item.id)) {
+      throw new Error(`товар "${item.title}" уже есть в корзине`);
     }
     this.items.push(item);
-    this.events.emit('basket:change');
+    this.events.emit("basket:change");
   }
 
   /**
@@ -37,7 +37,7 @@ export class Basket {
   deleteItem(item: IProduct): void {
     const id: string = item.id;
     this.items = this.items.filter((product) => product.id !== id);
-    this.events.emit('basket:change');
+    this.events.emit("basket:change");
   }
 
   /**
@@ -45,7 +45,7 @@ export class Basket {
    */
   clearCart(): void {
     this.items = [];
-    this.events.emit('basket:change');
+    this.events.emit("basket:change");
   }
 
   /**

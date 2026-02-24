@@ -1,17 +1,17 @@
 import { Component } from "../Component";
 
 type TGallery = {
-  catalog: HTMLElement[]
-}
+  catalog: HTMLElement[];
+};
 
-export class Gallery extends Component<TGallery>{
+export class Gallery extends Component<TGallery> {
   constructor(container: HTMLElement) {
-    super(container)
+    super(container);
   }
 
   set catalog(cards: HTMLElement[]) {
     cards.forEach((card) => {
-      this.container.append(card)
-    })
+      this.container.append(card);
+    });
   }
 }

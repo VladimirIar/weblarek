@@ -3,7 +3,7 @@ import { Component } from "../Component";
 import { IEvents } from "../Events";
 
 interface IHeader {
-  counter: number
+  counter: number;
 }
 
 export class Header extends Component<IHeader> {
@@ -11,10 +11,16 @@ export class Header extends Component<IHeader> {
   protected counterElement: HTMLElement;
   constructor(protected events: IEvents, container: HTMLElement) {
     super(container);
-    this.basketButton = ensureElement<HTMLButtonElement>('.header__basket', this.container);
-    this.counterElement = ensureElement<HTMLSpanElement>('.header__basket-counter', this.container);
-    this.basketButton.addEventListener('click', () => {
-      this.events.emit('basket:render');
+    this.basketButton = ensureElement<HTMLButtonElement>(
+      ".header__basket",
+      this.container
+    );
+    this.counterElement = ensureElement<HTMLSpanElement>(
+      ".header__basket-counter",
+      this.container
+    );
+    this.basketButton.addEventListener("click", () => {
+      this.events.emit("basket:render");
     });
   }
   set counter(value: number) {

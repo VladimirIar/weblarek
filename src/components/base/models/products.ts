@@ -7,14 +7,14 @@ export class Products {
   /**
    *  в конструктор опционально можно передать товары, но так же можно создать пустой экземпляр
    */
-  constructor(private events: EventEmitter ,private items: IProduct[] = []) {}
+  constructor(private events: EventEmitter, private items: IProduct[] = []) {}
   /**
    * сохранение массива товаров полученного в параметрах метода
    * @param items массив товаров
    */
   setItems(items: IProduct[]): void {
     this.items = items;
-    this.events.emit('products:change')
+    this.events.emit("products:change");
   }
 
   /**
@@ -40,7 +40,7 @@ export class Products {
    */
   saveCard(item: IProduct): void {
     this.chosenCard = item;
-    this.events.emit('product:select')
+    this.events.emit("product:select");
   }
 
   /**
