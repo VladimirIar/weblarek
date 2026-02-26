@@ -46,6 +46,7 @@ export class Customer {
         this.customerData.address = value;
         this.events.emit("customer:change");
         break;
+      
     }
   }
   /**
@@ -70,8 +71,8 @@ export class Customer {
    * соответствующие полям объекта customerData, значениями у которых будет текст
    * ошибки в случае если поле пустое.
    */
-  validate(): Partial<IBuyer> {
-    const errors: any = {};
+  validate(): Partial<Record<keyof IBuyer, string>> {
+    const errors: Partial<Record<keyof IBuyer, string>> = {};
     if (this.customerData.payment === "") {
       errors.payment = "Не выбран вид оплаты";
     }
