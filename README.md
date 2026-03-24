@@ -1,4 +1,4 @@
-https://github.com/VladimirIar/weblarek.git
+[https://github.com/VladimirIar/weblarek.git](https://vladimiriar.github.io/weblarek/)
 
 # Проектная работа "Веб-ларек"
 
